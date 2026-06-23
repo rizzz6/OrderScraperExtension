@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-card: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #f1f5f9;
+      --shadow-color: rgba(0, 0, 0, 0.05);
+      --header-bg: linear-gradient(135deg, #1e40af, #2563eb);
+      --header-shadow: rgba(37, 99, 235, 0.15);
+      --btn-outline-bg: #ffffff;
+      --btn-outline-border: #cbd5e1;
+      --btn-outline-text: #475569;
+      --btn-outline-hover: #f8fafc;
+    }
+    body.dark {
+      --bg-primary: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --header-bg: linear-gradient(135deg, #1e1b4b, #312e81);
+      --header-shadow: rgba(49, 46, 129, 0.3);
+      --btn-outline-bg: rgba(30, 41, 59, 0.5);
+      --btn-outline-border: rgba(255, 255, 255, 0.15);
+      --btn-outline-text: #cbd5e1;
+      --btn-outline-hover: rgba(51, 65, 85, 0.5);
+    }
+    body {
+      width: 300px;
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      text-align: center;
+      box-sizing: border-box;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .header {
+      background: var(--header-bg);
+      color: white;
+      border-radius: 12px;
+      padding: 18px 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px var(--header-shadow);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .header.amazon {
+      background: linear-gradient(135deg, #232f3e, #131921);
+      box-shadow: 0 4px 12px rgba(255, 153, 0, 0.25);
+      border-bottom: 3px solid #ff9900;
+    }
+    .header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .header p {
+      margin: 4px 0 0 0;
+      font-size: 11px;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+    .card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -1px var(--shadow-color);
+      border: 1px solid var(--border-color);
+      margin-bottom: 16px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    .btn-amazon {
+      background: linear-gradient(135deg, #ff9900, #e68a00);
+      color: white;
+    }
+    .btn-amazon:hover {
+      background: linear-gradient(135deg, #e68a00, #cc7a00);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 153, 0, 0.35);
+    }
+    .btn-outline {
+      background: var(--btn-outline-bg);
+      color: var(--btn-outline-text);
+      border: 1px solid var(--btn-outline-border);
+      margin-bottom: 10px;
+    }
+    .btn-outline:hover {
+      background: var(--btn-outline-hover);
+      border-color: var(--btn-outline-text);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+    .btn-csv {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      margin-bottom: 10px;
+    }
+    .btn-csv:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .btn-amazon-csv {
+      background: linear-gradient(135deg, #ff9900, #e68a00);
+      color: white;
+      margin-bottom: 10px;
+    }
+    .btn-amazon-csv:hover {
+      background: linear-gradient(135deg, #e68a00, #cc7a00);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+    }
+    .btn-pdf {
+      background: linear-gradient(135deg, #475569, #334155);
+      color: white;
+    }
+    .btn-pdf:hover {
+      background: linear-gradient(135deg, #334155, #1e293b);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+    }
+    .btn-coins {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      margin-bottom: 10px;
+    }
+    .btn-coins:hover {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+    .select-range {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--btn-outline-border);
+      width: 100%;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      margin-bottom: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .select-range:focus {
+      border-color: #ff9900;
+    }
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    .scanner-ring {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border-color);
+      border-top: 4px solid #2563eb;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 12px;
+    }
+    .scanner-ring.amazon {
+      border-top: 4px solid #ff9900;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .running-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+    .running-title.amazon {
+      color: #ff9900;
+    }
+    .running-count {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2563eb;
+      margin: 6px 0;
+    }
+    .running-count.amazon {
+      color: #ff9900;
+    }
+    .running-subtext {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .stats-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .stat-item {
+      background: var(--bg-primary);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .stat-item:hover {
+      transform: translateY(-1px);
+    }
+    .stat-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .stat-val.highlight {
+      color: #10b981;
+    }
+    .stat-lbl {
+      font-size: 10px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .category-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3px;
+      font-size: 11px;
+    }
+    .category-lbl {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .category-val {
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .progress-bar-bg {
+      background: var(--border-color);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Toast Notification System */
+    .toast-container {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      width: 276px;
+      z-index: 10000;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+    }
+    .toast-container.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .toast-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 10px;
+      padding: 10px 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 500;
+      color: #1e293b;
+      margin-bottom: 6px;
+      pointer-events: auto;
+    }
+    body.dark .toast-card {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    .toast-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+    }
+    .toast-success .toast-icon {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+    .toast-error .toast-icon {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+    .toast-info .toast-icon {
+      background: rgba(37, 99, 235, 0.15);
+      color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+  <!-- Header Banner -->
+  <div class="header" id="headerBanner">
+    <button id="themeToggle" style="position: absolute; top: 12px; right: 12px; background: rgba(255, 255, 255, 0.15); border: none; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; transition: background 0.2s;" title="Toggle Theme">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" id="themeToggleIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+    <h3 id="headerTitle">Spend History</h3>
+    <p id="headerSubtext">Complete Order History Tracker & Downloader</p>
+  </div>
+
+  <!-- View 1: Idle (Ready to scrape) -->
+  <div id="viewIdle" class="card">
+    <!-- Subview 1.4: Consolidated Dashboard (shown if data is cached) -->
+    <div id="consolidatedDashboard" class="hidden">
+      <div style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Combined Analytics
+      </div>
+      
+      <div class="stats-grid" style="margin-bottom: 12px;">
+        <div class="stat-item" style="grid-column: span 2;">
+          <div class="stat-val highlight" id="combinedStatSpent" style="font-size: 20px;">₹0</div>
+          <div class="stat-lbl">Combined Spend</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val" id="combinedStatAmazonSpent">₹0</div>
+          <div class="stat-lbl">Amazon Spend</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val" id="combinedStatFlipkartSpent">₹0</div>
+          <div class="stat-lbl">Flipkart Spend</div>
+        </div>
+      </div>
+
+      <!-- Combined status pipeline -->
+      <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-top: 14px; margin-bottom: 6px; letter-spacing: 0.3px; text-align: left; border-top: 1px solid var(--border-color); padding-top: 10px;">Combined Pipeline</div>
+      <div class="stats-grid" id="combinedStatusPipelineGrid" style="margin-bottom: 12px; gap: 8px;">
+        <!-- Filled dynamically -->
+      </div>
+
+      <!-- Combined Category Breakdown -->
+      <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-top: 14px; margin-bottom: 8px; letter-spacing: 0.3px; text-align: left; border-top: 1px solid var(--border-color); padding-top: 10px;">Category Spend Distribution</div>
+      <div id="combinedCategoryBreakdown" style="text-align: left; margin-bottom: 12px;">
+        <!-- Filled dynamically -->
+      </div>
+
+      <!-- Combined Spend Chart -->
+      <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-top: 14px; margin-bottom: 8px; letter-spacing: 0.3px; text-align: left; border-top: 1px solid var(--border-color); padding-top: 10px;">Combined Monthly Trend</div>
+      <div style="position: relative; margin-bottom: 12px; background: rgba(0,0,0,0.02); border-radius: 8px; padding: 10px 6px; border: 1px solid var(--border-color);">
+        <canvas id="combinedSpendChart" style="display: block; width: 100%; height: 130px;"></canvas>
+      </div>
+
+      <div style="margin-top: 14px; border-top: 1px solid var(--border-color); padding-top: 12px; margin-bottom: 12px;">
+        <button id="downloadCombinedCSV" class="btn btn-csv" style="margin-bottom: 8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export Combined CSV
+        </button>
+        <button id="downloadCombinedPDF" class="btn btn-pdf" style="margin-bottom: 0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Export Combined PDF
+        </button>
+      </div>
+
+      <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; border-top: 1px solid var(--border-color); padding-top: 10px;">
+        Need to run a fresh scrape? Use links below:
+      </div>
+    </div>
+
+    <!-- Subview 1.1: Flipkart Prompts -->
+    <div id="flipkartPrompt" class="hidden">
+      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">
+        Open your Flipkart Orders page, select your extraction depth, and start:
+      </div>
+      <div style="text-align: left; margin-bottom: 4px; font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Range Filter</div>
+      <select id="flipkartRange" class="select-range">
+        <option value="current">Current Year Only</option>
+        <option value="last3" selected>Last 3 Years (Recommended)</option>
+        <option value="all">All Time (Full History)</option>
+      </select>
+      <button id="startScraper" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Start Auto-Extraction
+      </button>
+    </div>
+
+    <!-- Subview 1.2: Amazon Prompts -->
+    <div id="amazonPrompt" class="hidden">
+      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">
+        Open your Amazon Orders page, select your extraction depth, and start:
+      </div>
+      <div style="text-align: left; margin-bottom: 4px; font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Range Filter</div>
+      <select id="amazonRange" class="select-range">
+        <option value="current">Current Year Only</option>
+        <option value="last3" selected>Last 3 Years (Recommended)</option>
+        <option value="all">All Time (Full History)</option>
+      </select>
+      <button id="startAmazonScraper" class="btn btn-amazon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Start Amazon Scraper
+      </button>
+    </div>
+
+    <!-- Subview 1.3: General Links (when not on Flipkart or Amazon) -->
+    <div id="generalPrompt">
+      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;">
+        To export your order spend statement, navigate to Flipkart or Amazon's order pages:
+      </div>
+      <button id="goToFlipkart" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line></svg>
+        Go to Flipkart Orders
+      </button>
+      <button id="goToAmazon" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff9900" stroke-width="3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line></svg>
+        Go to Amazon Orders
+      </button>
+    </div>
+  </div>
+
+  <!-- View 2: Running (Progress Screen) -->
+  <div id="viewRunning" class="card hidden">
+    <div class="loader-container">
+      <div class="scanner-ring" id="runningRing"></div>
+      <div class="running-title" id="runningTitle">Scanning Order History</div>
+      <div class="running-count" id="progressCount">0</div>
+      <div style="font-size: 11px; font-weight: 600; color: #64748b;">Orders found so far</div>
+      <div class="running-subtext">Engine is scrolling and loading past items automatically...</div>
+      <div class="running-subtext" style="color: #ef4444; font-weight: 600; margin-top: 10px;">You can safely close this popup now! Extraction continues in background.</div>
+      
+      <button id="stopScraperBtn" class="btn" style="margin-top: 16px; border: 1px solid #ef4444; color: #ef4444; font-weight: 600; background: rgba(239, 68, 68, 0.03); cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.08)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.03)'; this.style.transform='none';">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" style="display:inline; vertical-align:middle; margin-right:4px;"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect></svg>
+        Stop Extraction
+      </button>
+    </div>
+  </div>
+
+  <!-- View 3: Completed (Statistics & Downloads) -->
+  <div id="viewCompleted" class="card hidden">
+    <div class="stats-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      Extraction Complete!
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-val" id="statOrders">0</div>
+        <div class="stat-lbl">Total Orders</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val highlight" id="statSpent">₹0</div>
+        <div class="stat-lbl">Net Spent</div>
+      </div>
+    </div>
+    
+    <!-- Amazon Pay Balance Section (Only visible for Amazon platform) -->
+    <div id="amazonPayStats" class="hidden" style="margin-top: 10px; padding: 12px; background: rgba(255, 153, 0, 0.05); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 8px; text-align: left; box-sizing: border-box;">
+      <div style="font-size: 11px; font-weight: 700; color: #cc7a00; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.3px;">Amazon Pay Balance</div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+        <span style="color: #64748b;">Total Balance:</span>
+        <span style="font-weight: 700; color: #1e293b;" id="statAmazonPayBalance">₹0.00</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+        <span style="color: #64748b;">Amazon Pay Money:</span>
+        <span style="font-weight: 500; color: #475569;" id="statAmazonWalletBalance">₹0.00</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+        <span style="color: #64748b;">Gifts & Cashback:</span>
+        <span style="font-weight: 500; color: #475569;" id="statAmazonGiftBalance">₹0.00</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 11px; color: #10b981;">
+        <span style="color: #10b981; font-weight: 500;">Total Cashback Earned:</span>
+        <span style="font-weight: 700; color: #10b981;" id="statAmazonPayCashback">₹0.00</span>
+      </div>
+    </div>
+
+    <!-- Flipkart SuperCoins Section (Only visible for Flipkart platform) -->
+    <div id="flipkartCoinsStats" class="hidden" style="margin-top: 10px; padding: 12px; background: rgba(245, 158, 11, 0.05); border: 1px dashed rgba(245, 158, 11, 0.3); border-radius: 8px; text-align: left; box-sizing: border-box;">
+      <div style="font-size: 11px; font-weight: 700; color: #d97706; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.3px;">Flipkart SuperCoins</div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+        <span style="color: #64748b;">Coins Earned:</span>
+        <span style="font-weight: 700; color: #1e293b;" id="statFlipkartCoinsEarned">0</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+        <span style="color: #64748b;">Coins Spent:</span>
+        <span style="font-weight: 500; color: #475569;" id="statFlipkartCoinsSpent">0</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 11px;">
+        <span style="color: #64748b;">Coins Expired:</span>
+        <span style="font-weight: 500; color: #475569;" id="statFlipkartCoinsExpired">0</span>
+      </div>
+    </div>
+
+    <!-- Single Store status pipeline -->
+    <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-top: 14px; margin-bottom: 6px; letter-spacing: 0.3px; text-align: left; border-top: 1px solid var(--border-color); padding-top: 10px;">Order Status Pipeline</div>
+    <div class="stats-grid" id="statusPipelineGrid" style="margin-bottom: 12px; gap: 8px;">
+      <!-- Filled dynamically -->
+    </div>
+
+    <!-- Single Store Category Breakdown -->
+    <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-top: 14px; margin-bottom: 8px; letter-spacing: 0.3px; text-align: left; border-top: 1px solid var(--border-color); padding-top: 10px;">Category Spend Distribution</div>
+    <div id="categoryBreakdown" style="text-align: left; margin-bottom: 12px;">
+      <!-- Filled dynamically -->
+    </div>
+
+    <!-- Single Store Spend Chart -->
+    <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-top: 14px; margin-bottom: 8px; letter-spacing: 0.3px; text-align: left; border-top: 1px solid var(--border-color); padding-top: 10px;">Monthly Spending Trend</div>
+    <div style="position: relative; margin-bottom: 12px; background: rgba(0,0,0,0.02); border-radius: 8px; padding: 10px 6px; border: 1px solid var(--border-color);">
+      <canvas id="spendChart" style="display: block; width: 100%; height: 130px;"></canvas>
+    </div>
+    
+    <div style="margin-top: 14px;">
+      <!-- subview 3.1: Flipkart Downloads -->
+      <div id="flipkartDownloads" class="hidden">
+        <button id="downloadCSV" class="btn btn-csv">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Orders CSV
+        </button>
+        <button id="downloadCoinsCSV" class="btn btn-coins">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Coins CSV
+        </button>
+        <button id="downloadPDF" class="btn btn-pdf">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Generate Financial PDF
+        </button>
+      </div>
+
+      <!-- subview 3.2: Amazon Downloads -->
+      <div id="amazonDownloads" class="hidden">
+        <button id="downloadAmazonCSV" class="btn btn-amazon-csv">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Orders CSV
+        </button>
+        <button id="downloadAmazonPayCSV" class="btn btn-coins">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Pay Ledger CSV
+        </button>
+        <button id="downloadAmazonPDF" class="btn btn-pdf">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Generate Financial PDF
+        </button>
+      </div>
+
+      <a href="#" id="resetScraper" style="display:block; margin-top:12px; font-size:11px; color:#64748b; text-decoration:underline; font-weight:500;">Clear Cache & Re-run Scraper</a>
+    </div>
+  </div>
+
+  <!-- Custom Modal: Confirmation Dialog -->
+  <div id="confirmModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box;">
+    <div style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px) saturate(180%); -webkit-backdrop-filter: blur(12px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 16px; width: 280px; padding: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.4); font-family: 'Outfit', sans-serif; box-sizing: border-box; text-align: center;">
+      <div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: #ef4444; margin: 0 auto 12px auto;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      </div>
+      <div style="font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">Clear Cache & Restart?</div>
+      <div style="font-size: 11px; color: #64748b; font-weight: 500; line-height: 1.4; margin-bottom: 16px;">This will clear all currently cached spend histories and reopen scraper tabs to run a fresh extraction.</div>
+      
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button id="confirmYesBtn" class="btn" style="width: 100%; font-weight: 600; border: none; color: white; background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); cursor: pointer; padding: 10px 14px; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 12px;">Yes, Clear & Rerun</button>
+        <button id="confirmNoBtn" class="btn" style="width: 100%; font-weight: 600; border: 1px solid #cbd5e1; color: #475569; background: white; cursor: pointer; padding: 10px 14px; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 12px;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
