@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Flipkart & Amazon Expense Tracker & Downloader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Easily track and export Flipkart & Amazon order history to CSV/PDF. Perfect for expense tracking, budgeting, and personal finance.",
   "permissions": ["activeTab", "storage"],
   "icons": {
