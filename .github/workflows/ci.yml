@@ -92,7 +92,7 @@ jobs:
           Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -Force
           "built $zip"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: web-store-zip
           path: extension-*.zip
